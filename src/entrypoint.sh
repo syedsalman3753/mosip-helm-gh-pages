@@ -96,6 +96,7 @@ main() {
       INDEX_DIR=${TARGET_DIR}
   fi
 
+  echo "========= xxxxx =========================="
   locate
   download
   get_dependencies
