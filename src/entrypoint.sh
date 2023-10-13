@@ -33,6 +33,9 @@ CHART_VERSION=${13}
 INDEX_DIR=${14}
 ENTERPRISE_URL=${15}
 DEPENDENCIES=${16}
+LINTING_HEALTH_CHECK_SCHEMA_YAML_URL=${17}
+LINTING_CHART_SCHEMA_YAML_URL=${18}
+LINTING_LINTCONF_YAML_URL=${19}
 
 CHARTS=()
 CHARTS_TMP_DIR=$(mktemp -d)
@@ -98,6 +101,7 @@ main() {
   dependencies
   if [[ "$LINTING" != "off" ]]; then
     lint
+    chart_lint
   fi
   package
   upload
@@ -152,6 +156,16 @@ dependencies() {
 
 lint() {
   helm lint ${CHARTS[*]}
+}
+
+chart_lint() {
+  wget $LINTING_HEALTH_CHECK_SCHEMA_YAML_URL
+  wget $LINTING_CHART_SCHEMA_YAML_URL
+  wget $LINTING_LINTCONF_YAML_URL
+
+  for chart in ${CHARTS[*]}; do
+    ct lint --config=./chart-testing-config.yaml --charts=${chart};
+  done
 }
 
 package() {

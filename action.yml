@@ -32,6 +32,19 @@ inputs:
   linting:
     description: "Toggle Helm linting, can be disabled by setting it to 'off'"
     required: false
+    default: ON
+  linting_health_check_schema_yaml_url:
+    description: "Contains health check schema for the charts containing Deployments or Statefulset"
+    required: false
+    default: "https://raw.githubusercontent.com/syedsalman3753/kattu/master/.github/helm-lint-configs/health-check-schema.yaml"
+  linting_chart_schema_yaml_url:
+    description: "Contains schema Chart.yaml for charts"
+    required: false
+    default: "https://raw.githubusercontent.com/syedsalman3753/kattu/master/.github/helm-lint-configs/chart-schema.yaml"
+  linting_lintconf_yaml_url:
+    description: "Contains lintconf"
+    required: false
+    default: "https://raw.githubusercontent.com/syedsalman3753/kattu/master/.github/helm-lint-configs/lintconf.yaml"
   commit_username:
     description: "The user name used for the commit user"
     required: false
@@ -75,3 +88,6 @@ runs:
     - ${{ inputs.index_dir }}
     - ${{ inputs.enterprise_url }}
     - ${{ inputs.dependencies }}
+    - ${{ inputs.linting_health_check_schema_yaml_url }}
+    - ${{ inputs.linting_chart_schema_yaml_url }}
+    - ${{ inputs.linting_lintconf_yaml_url }}
