@@ -37,13 +37,14 @@ DEPENDENCIES=${16}
 LINTING_HEALTH_CHECK_SCHEMA_YAML_URL=${17}
 LINTING_CHART_SCHEMA_YAML_URL=${18}
 LINTING_LINTCONF_YAML_URL=${19}
-  echo "2 ========= xxxxx =========================="
+linting_chart_testing_config_yaml_url
+LINTING_CHART_TESTING_CONFIG_YAML_URL=${20}
+
 CHARTS=()
 CHARTS_TMP_DIR=$(mktemp -d)
-git config --global --add safe.directory /github/workspace
+git config --global --add safe.directory *
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_URL=""
-  echo "3 ========= xxxxx =========================="
 
 main() {
   if [[ -z "$HELM_VERSION" ]]; then
@@ -165,6 +166,7 @@ chart_lint() {
   wget $LINTING_HEALTH_CHECK_SCHEMA_YAML_URL
   wget $LINTING_CHART_SCHEMA_YAML_URL
   wget $LINTING_LINTCONF_YAML_URL
+  wget $LINTING_CHART_TESTING_CONFIG_YAML_URL
 
   for chart in ${CHARTS[*]}; do
     ct lint --config=./chart-testing-config.yaml --charts=${chart};
