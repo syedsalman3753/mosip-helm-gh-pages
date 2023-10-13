@@ -102,6 +102,7 @@ main() {
   if [[ "$LINTING" != "off" ]]; then
     lint
     chart_lint
+
   fi
   package
   upload
