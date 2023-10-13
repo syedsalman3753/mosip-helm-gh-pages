@@ -37,11 +37,12 @@ DEPENDENCIES=${16}
 LINTING_HEALTH_CHECK_SCHEMA_YAML_URL=${17}
 LINTING_CHART_SCHEMA_YAML_URL=${18}
 LINTING_LINTCONF_YAML_URL=${19}
-
+  echo "2 ========= xxxxx =========================="
 CHARTS=()
 CHARTS_TMP_DIR=$(mktemp -d)
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_URL=""
+  echo "3 ========= xxxxx =========================="
 
 main() {
   if [[ -z "$HELM_VERSION" ]]; then
@@ -96,7 +97,6 @@ main() {
       INDEX_DIR=${TARGET_DIR}
   fi
 
-  echo "========= xxxxx =========================="
   locate
   download
   get_dependencies
