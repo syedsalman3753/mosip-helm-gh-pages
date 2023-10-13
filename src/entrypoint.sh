@@ -17,6 +17,7 @@
 set -o errexit
 set -o pipefail
 
+echo "========= xxxxx =========================="
 GITHUB_TOKEN=$1
 CHARTS_DIR=$2
 CHARTS_URL=$3
@@ -102,7 +103,6 @@ main() {
   if [[ "$LINTING" != "off" ]]; then
     lint
     chart_lint
-
   fi
   package
   upload
@@ -185,7 +185,6 @@ upload() {
   tmpDir=$(mktemp -d)
   pushd $tmpDir >& /dev/null
 
-  echo "========== xxxxx ============================"
   git clone ${REPO_URL}
   cd ${REPOSITORY}
   git config user.name "${COMMIT_USERNAME}"
