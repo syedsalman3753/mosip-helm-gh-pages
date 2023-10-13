@@ -40,6 +40,7 @@ LINTING_LINTCONF_YAML_URL=${19}
   echo "2 ========= xxxxx =========================="
 CHARTS=()
 CHARTS_TMP_DIR=$(mktemp -d)
+git config --global --add safe.directory /github/workspace
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_URL=""
   echo "3 ========= xxxxx =========================="
