@@ -169,6 +169,11 @@ chart_lint() {
   for chart in ${CHARTS[*]}; do
     ct lint --config=./chart-testing-config.yaml --charts=${chart};
   done
+
+  for chart in ${CHARTS[*]}; do
+    helm template $chart | yq e '. | select(.kind == "Deployment" or .kind == "StatefulSet")' > $chart.yaml
+    yamale -s ./health-check-schema.yaml "$chart.yaml" --no-strict
+  done
 }
 
 package() {
