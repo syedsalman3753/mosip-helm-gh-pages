@@ -185,13 +185,13 @@ upload() {
   tmpDir=$(mktemp -d)
   pushd $tmpDir >& /dev/null
 
+  echo "========== xxxxx ============================"
   git clone ${REPO_URL}
   cd ${REPOSITORY}
   git config user.name "${COMMIT_USERNAME}"
   git config user.email "${COMMIT_EMAIL}"
   git remote set-url origin ${REPO_URL}
   git checkout ${BRANCH}
-  git config --global --add safe.directory /github/workspace
 
   charts=$(cd ${CHARTS_TMP_DIR} && ls *.tgz | xargs)
 
