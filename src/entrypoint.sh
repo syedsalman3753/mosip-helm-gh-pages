@@ -17,7 +17,6 @@
 set -o errexit
 set -o pipefail
 
-echo "========= xxxxx =========================="
 GITHUB_TOKEN=$1
 CHARTS_DIR=$2
 CHARTS_URL=$3
@@ -41,7 +40,7 @@ LINTING_CHART_TESTING_CONFIG_YAML_URL=${20}
 
 CHARTS=()
 CHARTS_TMP_DIR=$(mktemp -d)
-git config --global --add safe.directory *
+git config --global --add safe.directory /github/workspace
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_URL=""
 
