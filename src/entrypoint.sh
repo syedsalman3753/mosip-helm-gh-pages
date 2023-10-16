@@ -106,6 +106,7 @@ main() {
   if [[ "$LINTING" != "OFF" ]]; then
     lint
     chart_lint
+  fi
   fi [[ "$CHART_PUBLISH" != "OFF" ]]; then
     package
     upload
