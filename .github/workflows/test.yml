@@ -17,4 +17,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           charts_dir: testdata
           ignore_charts: test2
-          chart_publish: OFF
+          chart_publish: ON
