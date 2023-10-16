@@ -3,30 +3,30 @@ entries:
   test:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-10-16T08:37:41.765962008Z"
+    created: "2023-10-16T09:04:04.687077633Z"
     description: A Helm chart for Kubernetes
-    digest: 9786493467a78f5a75a5f8e7f2ee5695d7898d7d223c670f5e69237491df3d65
+    digest: e87f8c5bf36133bc3f697a54a6548b04ed58cce13aa5a3c98d853d78c7f58824
     maintainers:
     - email: info@mosip.io
       name: MOSIP
     name: test
     type: application
     urls:
-    - https://syedsalman3753.github.io/mosip-helm-gh-pages/test-0.1.0.tgz
+    - https://syedsalman3753.github.io/syed-helm-gh-pages/test-0.1.0.tgz
     version: 0.1.0
   test1:
   - apiVersion: v2
     appVersion: 1.17.0
-    created: "2023-10-16T08:37:41.767209481Z"
+    created: "2023-10-16T09:04:04.687528058Z"
     description: A Helm chart for Kubernetes
-    digest: 80b57a8cd4b2dd9e5fd65e52ba85edc414620f599fafbbf4736a7f9ef8db5e06
+    digest: c54584fca03b693a24146ee407e876f0a4b46ea17ca72280babf6f3b7d51c653
     maintainers:
     - email: info@mosip.io
       name: MOSIP
     name: test1
     type: application
     urls:
-    - https://syedsalman3753.github.io/mosip-helm-gh-pages/test1-0.2.0.tgz
+    - https://syedsalman3753.github.io/syed-helm-gh-pages/test1-0.2.0.tgz
     version: 0.2.0
   - apiVersion: v2
     appVersion: 1.16.0
@@ -52,4 +52,4 @@ entries:
     urls:
     - https://syedsalman3753.github.io/mosip-helm-gh-pages/test2-0.2.0.tgz
     version: 0.2.0
-generated: "2023-10-16T08:37:41.764592828Z"
+generated: "2023-10-16T09:04:04.686344892Z"
