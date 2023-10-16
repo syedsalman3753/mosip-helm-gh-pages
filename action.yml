@@ -11,6 +11,9 @@ inputs:
   charts_dir:
     description: "The charts directory, defaults to `charts`"
     required: false
+  ignore_charts:
+    description: "Ignore the charts present in <charts_dir>, provide the list of chart_names separated by spaces"
+    required: false
   charts_url:
     description: "The GitHub Pages URL, defaults to `https://<OWNER>.github.io/<REPOSITORY>`"
     required: false
@@ -96,3 +99,4 @@ runs:
     - ${{ inputs.linting_chart_schema_yaml_url }}
     - ${{ inputs.linting_lintconf_yaml_url }}
     - ${{ inputs.linting_chart_testing_config_yaml_url }}
+    - ${{ inputs.ignore_charts }}
