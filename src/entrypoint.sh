@@ -117,13 +117,13 @@ locate() {
         echo "===== Found $dir in ignore chart list";
         continue;
       fi
+      if [[ -f "${dir}/Chart.yaml" ]]; then
+        CHARTS+=("${dir}")
+        echo "Found chart directory ${dir}"
+      else
+        echo "Ignoring non-chart directory ${dir}"
+      fi
     done
-    if [[ -f "${dir}/Chart.yaml" ]]; then
-      CHARTS+=("${dir}")
-      echo "Found chart directory ${dir}"
-    else
-      echo "Ignoring non-chart directory ${dir}"
-    fi
   done
 }
 
