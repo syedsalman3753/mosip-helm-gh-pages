@@ -113,7 +113,7 @@ main() {
 locate() {
   for dir in $(find "${CHARTS_DIR}" -type d -mindepth 1 -maxdepth 1); do
     for chart in ${IGNORE_CHARTS}; do
-      if [[ "${dir}" == "${CHARTS_DIR}$chart" ]]; then
+      if [[ "${dir}" == "${CHARTS_DIR}/$chart" ]]; then
         echo "===== Found $dir in ignore chart list";
         continue;
       fi
