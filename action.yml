@@ -34,7 +34,7 @@ inputs:
     description: "The Helm CLI version"
     required: false
   linting:
-    description: "Toggle Helm linting, can be disabled by setting it to 'off'"
+    description: "Toggle Helm linting (ON/OFF), can be disabled by setting it to 'ON'"
     required: false
     default: ON
   linting_health_check_schema_yaml_url:
@@ -76,6 +76,10 @@ inputs:
   dependencies:
     description: "A list of helm repositories required to verify dependencies in the format '<name>,<url>;<name>,<url>'"
     required: false
+  chart_publish:
+    description: "Toggle Helm chart publish (ON/OFF), can be disabled by setting it to 'ON'"
+    required: false
+    default: ON
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -101,3 +105,4 @@ runs:
     - ${{ inputs.linting_lintconf_yaml_url }}
     - ${{ inputs.linting_chart_testing_config_yaml_url }}
     - ${{ inputs.ignore_charts }}
+    - ${{ inputs.chart_publish }}

@@ -38,6 +38,7 @@ LINTING_CHART_SCHEMA_YAML_URL=${18}
 LINTING_LINTCONF_YAML_URL=${19}
 LINTING_CHART_TESTING_CONFIG_YAML_URL=${20}
 IGNORE_CHARTS=${21}
+CHART_PUBLISH=${22}
 
 CHARTS=()
 CHARTS_TMP_DIR=$(mktemp -d)
@@ -102,12 +103,13 @@ main() {
   download
   get_dependencies
   dependencies
-  if [[ "$LINTING" != "off" ]]; then
+  if [[ "$LINTING" != "OFF" ]]; then
     lint
     chart_lint
-  fi
-  package
-  upload
+  fi [[ "$CHART_PUBLISH" != "OFF" ]]; then
+    package
+    upload
+  if
 }
 
 locate() {
