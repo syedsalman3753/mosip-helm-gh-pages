@@ -107,10 +107,10 @@ main() {
     lint
     chart_lint
   fi
-  fi [[ "$CHART_PUBLISH" != "OFF" ]]; then
+  if [[ "$CHART_PUBLISH" != "OFF" ]]; then
     package
     upload
-  if
+  fi
 }
 
 locate() {
