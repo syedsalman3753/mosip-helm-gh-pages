@@ -5,14 +5,20 @@ on:
     branch:
     - 'master'
     - 'helm-*'
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'testdata/**'
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Publish helm chart
         uses: ./
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           charts_dir: testdata
+          ignore_charts: test2
+          chart_publish: NO

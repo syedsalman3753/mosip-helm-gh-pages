@@ -33,9 +33,16 @@ CHART_VERSION=${13}
 INDEX_DIR=${14}
 ENTERPRISE_URL=${15}
 DEPENDENCIES=${16}
+LINTING_HEALTH_CHECK_SCHEMA_YAML_URL=${17}
+LINTING_CHART_SCHEMA_YAML_URL=${18}
+LINTING_LINTCONF_YAML_URL=${19}
+LINTING_CHART_TESTING_CONFIG_YAML_URL=${20}
+IGNORE_CHARTS=${21}
+CHART_PUBLISH=${22}
 
 CHARTS=()
 CHARTS_TMP_DIR=$(mktemp -d)
+git config --global --add safe.directory /github/workspace
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_URL=""
 
@@ -96,15 +103,23 @@ main() {
   download
   get_dependencies
   dependencies
-  if [[ "$LINTING" != "off" ]]; then
+  if [[ "$LINTING" != "NO" ]]; then
     lint
+    chart_lint
   fi
-  package
-  upload
+  if [[ "$CHART_PUBLISH" != "NO" ]]; then
+    package
+    upload
+  fi
 }
 
 locate() {
   for dir in $(find "${CHARTS_DIR}" -type d -mindepth 1 -maxdepth 1); do
+    count=$(echo $dir | grep -Evwc ${IGNORE_CHARTS} || true);
+    if [[ $count -eq 0 ]]; then
+      echo "===== Found $dir in ignore chart list";
+      continue;
+    fi
     if [[ -f "${dir}/Chart.yaml" ]]; then
       CHARTS+=("${dir}")
       echo "Found chart directory ${dir}"
@@ -112,6 +127,8 @@ locate() {
       echo "Ignoring non-chart directory ${dir}"
     fi
   done
+
+  echo "CHARTS LIST : ${CHARTS[*]}"
 }
 
 download() {
@@ -152,6 +169,26 @@ dependencies() {
 
 lint() {
   helm lint ${CHARTS[*]}
+}
+
+chart_lint() {
+  wget $LINTING_HEALTH_CHECK_SCHEMA_YAML_URL
+  wget $LINTING_CHART_SCHEMA_YAML_URL
+  wget $LINTING_LINTCONF_YAML_URL
+  wget $LINTING_CHART_TESTING_CONFIG_YAML_URL
+
+  for chart in ${CHARTS[*]}; do
+    ct lint --config=./chart-testing-config.yaml --charts=${chart};
+  done
+
+  for chart in ${CHARTS[*]}; do
+    helm template $chart | yq e '. | select(.kind == "Deployment" or .kind == "StatefulSet")' > $chart.yaml
+
+    ## The $chart.yaml file is not-empty.
+    if [[ -s $chart.yaml ]]; then
+      yamale -s ./health-check-schema.yaml "$chart.yaml" --no-strict
+    fi
+  done
 }
 
 package() {
@@ -197,7 +234,7 @@ upload() {
   git add ${TARGET_DIR}
   git add ${INDEX_DIR}/index.yaml
 
-  git commit -m "Publish $charts"
+  git commit -s -m "Publish $charts"
   git push origin ${BRANCH}
 
   popd >& /dev/null

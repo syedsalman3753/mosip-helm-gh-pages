@@ -19,8 +19,15 @@ Inputs:
 * `app_version` Explicitly specify app version in package. If not defined then used chart values.
 * `chart_version` Explicitly specify chart version in package. If not defined then used chart values.
 * `index_dir` The location of `index.yaml` file in the repo, defaults to the same value as `target_dir`
-* `enterprise_url` The URL of enterprise github server in the format `<server-url>/<organisation>`
+* `enterprise_url` The URL of enterprise GitHub server in the format `<server-url>/<organisation>`
 * `dependencies` A list of helm repositories required to verify dependencies in the format `<name>,<url>;<name>,<url>` or if using private repositories `<name>,<username>,<password>,<url>;<name>,<username>,<password>,<url>`. Combinations are allowed.
+* `ignore_charts`: "Ignore the charts present in <charts_dir>, provide the list of chart_names separated by pipe (|), default: ''".
+* `chart_publish`: "Toggle Helm chart publish (YES/NO), can be disabled by setting it to 'YES', default: 'YES'".
+* `linting`: "Toggle Helm linting (YES/NO), can be disabled by setting it to 'NO', default: 'YES'".
+* `linting_health_check_schema_yaml_url`: "The URL contains health check schema yaml file to validate charts containing Deployments or Statefulset, default: 'https://raw.githubusercontent.com/mosip/kattu/master/.github/helm-lint-configs/health-check-schema.yaml'".
+* `linting_chart_schema_yaml_url`: "The URL contains `Chart.yaml` schema yaml file to validate `Chart.yaml` file present in helm charts, default: 'https://raw.githubusercontent.com/mosip/kattu/master/.github/helm-lint-configs/chart-schema.yaml'".
+* `linting_lintconf_yaml_url`: "The URL contains Helm lint configuration yaml to validate helm charts yaml files, default: 'https://raw.githubusercontent.com/mosip/kattu/master/.github/helm-lint-configs/lintconf.yaml'".
+* `linting_chart_testing_config_yaml_url`: "The URL contains helm-chart-testing configuration yaml file to validate `chart-yaml-schema` & `lint-configuration`, default: 'https://raw.githubusercontent.com/mosip/kattu/master/.github/helm-lint-configs/chart-testing-config.yaml'".
 
 ## Examples
 
@@ -57,7 +64,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Publish Helm chart
-        uses: stefanprodan/helm-gh-pages@master
+        uses: mosip/helm-gh-pages@master
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
           charts_dir: chart
