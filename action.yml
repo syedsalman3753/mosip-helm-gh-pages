@@ -1,6 +1,6 @@
-name: 'Helm Publisher'
+name: 'MOSIP Helm Publisher'
 description: 'A GitHub Action for publishing Helm charts with Github Pages'
-author: 'Stefan Prodan'
+author: 'MOSIP'
 branding:
   icon: 'command'
   color: 'blue'
@@ -11,6 +11,10 @@ inputs:
   charts_dir:
     description: "The charts directory, defaults to `charts`"
     required: false
+  ignore_charts:
+    description: "Ignore the charts present in <charts_dir>, provide the list of chart_names separated by pipe (|)"
+    required: false
+    default: ""
   charts_url:
     description: "The GitHub Pages URL, defaults to `https://<OWNER>.github.io/<REPOSITORY>`"
     required: false
@@ -30,8 +34,25 @@ inputs:
     description: "The Helm CLI version"
     required: false
   linting:
-    description: "Toggle Helm linting, can be disabled by setting it to 'off'"
+    description: "Toggle Helm linting (YES/NO), can be disabled by setting it to 'NO'"
     required: false
+    default: YES
+  linting_health_check_schema_yaml_url:
+    description: "Contains health check schema for the charts containing Deployments or Statefulset"
+    required: false
+    default: "https://raw.githubusercontent.com/mosip/kattu/master/.github/helm-lint-configs/health-check-schema.yaml"
+  linting_chart_schema_yaml_url:
+    description: "Contains schema Chart.yaml for charts"
+    required: false
+    default: "https://raw.githubusercontent.com/mosip/kattu/master/.github/helm-lint-configs/chart-schema.yaml"
+  linting_lintconf_yaml_url:
+    description: "Contains lintconf"
+    required: false
+    default: "https://raw.githubusercontent.com/mosip/kattu/master/.github/helm-lint-configs/lintconf.yaml"
+  linting_chart_testing_config_yaml_url:
+    description: "Contains lintconf"
+    required: false
+    default: "https://raw.githubusercontent.com/mosip/kattu/master/.github/helm-lint-configs/chart-testing-config.yaml"
   commit_username:
     description: "The user name used for the commit user"
     required: false
@@ -55,6 +76,10 @@ inputs:
   dependencies:
     description: "A list of helm repositories required to verify dependencies in the format '<name>,<url>;<name>,<url>'"
     required: false
+  chart_publish:
+    description: "Toggle Helm chart publish (YES/NO), can be disabled by setting it to 'YES'"
+    required: false
+    default: YES
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -75,3 +100,9 @@ runs:
     - ${{ inputs.index_dir }}
     - ${{ inputs.enterprise_url }}
     - ${{ inputs.dependencies }}
+    - ${{ inputs.linting_health_check_schema_yaml_url }}
+    - ${{ inputs.linting_chart_schema_yaml_url }}
+    - ${{ inputs.linting_lintconf_yaml_url }}
+    - ${{ inputs.linting_chart_testing_config_yaml_url }}
+    - ${{ inputs.ignore_charts }}
+    - ${{ inputs.chart_publish }}
