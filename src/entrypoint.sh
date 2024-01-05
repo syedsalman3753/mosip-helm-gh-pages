@@ -163,6 +163,7 @@ get_dependencies() {
 
 dependencies() {
   for chart in ${CHARTS[@]}; do
+    echo " ========================== Chart name: $chart ============================ ";
     helm dependency update "${chart}"
   done
 }
@@ -178,10 +179,12 @@ chart_lint() {
   wget $LINTING_CHART_TESTING_CONFIG_YAML_URL
 
   for chart in ${CHARTS[*]}; do
+    echo " ======================= Chart-testing Lint :: Chart name: $chart ======================= ";
     ct lint --config=./chart-testing-config.yaml --charts=${chart};
   done
 
   for chart in ${CHARTS[*]}; do
+    echo " ================ Health check for Deployment/Statefulset :: Chart name: $chart ================== ";
     helm template $chart | yq e '. | select(.kind == "Deployment" or .kind == "StatefulSet")' > $chart.yaml
 
     ## The $chart.yaml file is not-empty.
