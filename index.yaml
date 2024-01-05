@@ -3,9 +3,9 @@ entries:
   test:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-10-17T07:47:34.424666409Z"
+    created: "2024-01-05T10:39:52.743987418Z"
     description: A Helm chart for Kubernetes
-    digest: 061f8b5f9663361503ed53b24065455fb4a1b4de23a49825513a36e430227211
+    digest: 48ae417cba99412ad4c359155ecccb0975d30c4c37122fda552e7c24034786e5
     maintainers:
     - email: info@mosip.io
       name: MOSIP
@@ -17,9 +17,9 @@ entries:
   test1:
   - apiVersion: v2
     appVersion: 1.17.0
-    created: "2023-10-17T07:47:34.425133609Z"
+    created: "2024-01-05T10:39:52.744334704Z"
     description: A Helm chart for Kubernetes
-    digest: 8ad5d43f7633c6625769abd425dc9bab722687dbcdf5b7933de880f95a7cbe57
+    digest: 244da7fe0c04910034dc178ac41b7a33a23b9dd9bb36a03b1ad6d155e64cc352
     maintainers:
     - email: info@mosip.io
       name: MOSIP
@@ -52,4 +52,4 @@ entries:
     urls:
     - https://syedsalman3753.github.io/mosip-helm-gh-pages/test2-0.2.0.tgz
     version: 0.2.0
-generated: "2023-10-17T07:47:34.423999409Z"
+generated: "2024-01-05T10:39:52.743443125Z"
