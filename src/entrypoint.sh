@@ -185,6 +185,7 @@ chart_lint() {
 
   for chart in ${CHARTS[*]}; do
     echo " ================ Health check for Deployment/Statefulset :: Chart name: $chart ================== ";
+    ls -la ./
     helm template $chart | yq e '. | select(.kind == "Deployment" or .kind == "StatefulSet")' > $chart.yaml
 
     ## The $chart.yaml file is not-empty.
