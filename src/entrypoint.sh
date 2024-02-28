@@ -99,6 +99,10 @@ main() {
       INDEX_DIR=${TARGET_DIR}
   fi
 
+
+  if [[ -f .chart-testing-helm-ignore ]]; then
+    remove_dependencies
+  fi
   locate
   download
   get_dependencies
@@ -113,9 +117,30 @@ main() {
   fi
 }
 
+remove_dependencies() {
+  ## Add dependency charts to .helmignore file
+  while IFS='\n' read line; do
+    if [[ -z $line ]]; then
+      continue
+    fi
+    echo "Chart & its dependency charts to ignore : $line";
+
+    chart_name=$( echo "$line" |awk -F ': ' '{print $1}' );
+    ignore_dep_chart=$( echo "$line" |awk -F ': ' '{print $2}' | sed 's/ /\n/g' | sed "s/'//g");
+
+    echo "Chart_name : $chart_name";
+    echo "ignore_dep_chart : $ignore_dep_chart";
+
+    for dep_chart in $ignore_dep_chart; do
+      yq e -i 'del(.dependencies[] | select(.name == "'$dep_chart'"))' $chart_name/Chart.yaml
+    done
+  done < .chart-testing-helm-ignore
+}
+
 locate() {
   for dir in $(find "${CHARTS_DIR}" -type d -mindepth 1 -maxdepth 1); do
-    count=$(echo $dir | grep -Evwc ${IGNORE_CHARTS} || true);
+    chart=$( echo $dir | awk -F '/' '{print $2}' )
+    count=$(echo $chart | grep -Evwc ${IGNORE_CHARTS} || true);
     if [[ $count -eq 0 ]]; then
       echo "===== Found $dir in ignore chart list";
       continue;
@@ -163,7 +188,7 @@ get_dependencies() {
 
 dependencies() {
   for chart in ${CHARTS[@]}; do
-    echo " ========================== Chart name: $chart ============================ ";
+    echo " ========================== Dependency update :: Chart name: $chart ============================ ";
     helm dependency update "${chart}"
   done
 }
