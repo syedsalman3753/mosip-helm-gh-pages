@@ -153,6 +153,11 @@ locate() {
     fi
   done
 
+  if [ ${#CHARTS[@]} -eq 0 ]; then
+      echo "The CHARTS list is empty; SKIPPING OPERATION;"
+      exit 0;
+  fi
+
   echo "CHARTS LIST : ${CHARTS[*]}"
 }
 
