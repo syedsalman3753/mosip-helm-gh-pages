@@ -100,7 +100,7 @@ main() {
   fi
 
 
-  if [[ -f .chart-testing-helm-ignore ]]; then
+  if [[ -f ignore-dependency-chart.txt ]]; then
     remove_dependencies
   fi
   locate
@@ -134,7 +134,7 @@ remove_dependencies() {
     for dep_chart in $ignore_dep_chart; do
       yq e -i 'del(.dependencies[] | select(.name == "'$dep_chart'"))' $chart_name/Chart.yaml
     done
-  done < .chart-testing-helm-ignore
+  done < ignore-dependency-chart.txt
 }
 
 locate() {
@@ -215,6 +215,13 @@ chart_lint() {
 
   for chart in ${CHARTS[*]}; do
     echo " ================ Health check for Deployment/Statefulset :: Chart name: $chart ================== ";
+    if [[ -f ignore-health-check.txt ]]; then
+      count=$(grep -Ec "$chart$" ignore-health-check.txt  || true )
+      if [[ $count -eq 1 ]]; then
+        echo -e "Chart \"$chart\" found in \"ignore-health-check.txt\" file; SKIPPING HEALTH CHECK;"
+        continue
+      fi
+    fi
     helm template $chart | yq e '. | select(.kind == "Deployment" or .kind == "StatefulSet")' > $chart.yaml
 
     ## The $chart.yaml file is not-empty.
