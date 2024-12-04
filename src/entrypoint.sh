@@ -215,9 +215,6 @@ chart_lint() {
 
   for chart in ${CHARTS[*]}; do
     echo " ================ Health check for Deployment/Statefulset :: Chart name: $chart ================== ";
-    echo "testing $PWD"
-    pwd
-    ls
     if [[ -f ignore-health-check.txt ]]; then
       count=$(grep -Ec "$chart$" ignore-health-check.txt  || true )
       if [[ $count -eq 1 ]]; then
