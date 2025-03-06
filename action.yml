@@ -52,7 +52,7 @@ inputs:
   linting_chart_testing_config_yaml_url:
     description: "Contains lintconf"
     required: false
-    default: "https://raw.githubusercontent.com/mosip/kattu/master/.github/helm-lint-configs/chart-testing-config.yaml"
+    default: "https://raw.githubusercontent.com/syedsalman3753/kattu/master/.github/helm-lint-configs/chart-testing-config.yaml"
   commit_username:
     description: "The user name used for the commit user"
     required: false
